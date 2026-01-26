@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Parking;
+use App\Models\Reservation;
 
 class User extends Authenticatable
 {
@@ -31,6 +32,10 @@ class User extends Authenticatable
 
     public function parkings() {
         return $this->hasMany(Parking::class, 'agent_id');
+    }
+
+    public function reservations() {
+        return $this->hasMany(Reservation::class);
     }
 
     /**
