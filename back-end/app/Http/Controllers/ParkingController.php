@@ -111,4 +111,9 @@ class ParkingController extends Controller
         ], 201);
     }
 
+    public function parkings() {
+        $parkings = Parking::all();
+        return response()->json($parkings, 200);
+    }
+
 }

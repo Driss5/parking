@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Reservation;
 
 class AuthController extends Controller
 {
@@ -65,6 +66,17 @@ class AuthController extends Controller
     public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'You have been logged out'], 200);
+    }
+
+    public function user(Request $request) {
+        $user = $request->user();
+        $reservations = Reservation::where('user_id', $user->id)->with('parking')->get();
+
+        if ($reservations->isEmpty()) {
+            return response()->json(['message' => 'No reservations found for this user', 'user' => $user], 200);
+        } else {
+            return response()->json(['user' => $user, 'reservations' => $reservations], 200);
+        }
     }
     
 }
