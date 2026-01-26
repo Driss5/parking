@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Parking;
 
 class User extends Authenticatable
 {
@@ -27,6 +28,10 @@ class User extends Authenticatable
         'cin',
         'role',
     ];
+
+    public function parkings() {
+        return $this->hasMany(Parking::class, 'agent_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
