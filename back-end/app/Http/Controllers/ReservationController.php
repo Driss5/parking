@@ -36,4 +36,65 @@ class ReservationController extends Controller
             return response()->json(['message' => 'No available spots or parking not found'], 404);
         }
     }
+
+    public function agentReservations() {
+        $user = auth()->user();
+
+        if ($user->role !== 'agent') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $reservations = Reservation::whereHas('parking', function($query) use ($user) {
+            $query->where('agent_id', $user->id);
+        })->get();
+
+        return response()->json(['reservations' => $reservations], 200);
+    }
+
+    public function updateReservationStatus(Request $request, $id, $status) {
+        $user = auth()->user();
+
+        if ($user->role !== 'agent') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $reservation = Reservation::find($id);
+
+        if (!$reservation) {
+            return response()->json(['message' => 'Reservation not found'], 404);
+        }
+
+        $reservation->status = $status;
+        $reservation->save();
+
+        return response()->json(['message' => 'Reservation status updated', 'reservation' => $reservation], 200);
+    }
+
+    public function agentDashboard() {
+        $user = auth()->user();
+        $parking = Parking::where('agent_id', $user->id)->first();
+
+        if ($user->role !== 'agent') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $totalReservations = Reservation::whereHas('parking', function($query) use ($user) {
+            $query->where('agent_id', $user->id);
+        })->count();
+
+        $pendingReservations = Reservation::whereHas('parking', function($query) use ($user) {
+            $query->where('agent_id', $user->id);
+        })->where('status', 'pending')->count();
+
+        $completedReservations = Reservation::whereHas('parking', function($query) use ($user) {
+            $query->where('agent_id', $user->id);
+        })->where('status', 'confirmed')->count();
+
+        return response()->json([
+            'total_reservations' => $totalReservations,
+            'pending_reservations' => $pendingReservations,
+            'completed_reservations' => $completedReservations,
+            'available_spots' => $parking ? $parking->available_spots : 0
+        ], 200);
+    }
 }
