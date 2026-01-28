@@ -1,6 +1,14 @@
+<script setup>
+
+import LogoutAuth from '@/components/Auth/LogoutAuth.vue';
+
+</script>
+
+
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <LogoutAuth />
   </div>
 </template>
 
