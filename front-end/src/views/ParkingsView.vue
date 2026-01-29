@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
+import router from '@/router'
 
 const parkings = ref([])
 
@@ -32,6 +34,11 @@ const handleShowParking = async () => {
 onMounted(() => {
   handleShowParking()
 })
+
+function handleShowOneParking(id) {
+    console.log('Show details for parking with ID:', id)
+    router.push({ name: 'ParkingDetails', params: { id } })
+}
 </script>
 
 
@@ -60,7 +67,7 @@ onMounted(() => {
         <td>{{ parking.description }}</td>
         <td>{{ parking.number }}</td>
         <td>{{ parking.status }}</td>
-        <td><button>Reserver</button></td>
+        <td><button @click="handleShowOneParking(parking.id)">Reserver</button></td>
     </tr>
   </table>
 </template>

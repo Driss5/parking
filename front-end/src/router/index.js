@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import RegisterView from '../views/AuthView/RegisterView.vue'
 import LoginView from '../views/AuthView/LoginView.vue'
 import ParkingsView from '@/views/ParkingsView.vue'
+import ParkingDetailsView from '@/views/ParkingDetailsView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +36,16 @@ const router = createRouter({
       path: '/parkings',
       name: 'parkings',
       component: ParkingsView,
+    },
+    {
+      path: '/ParkingDetails/:id',
+      name: 'ParkingDetails',
+      component: ParkingDetailsView,
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
     },
   ],
 })

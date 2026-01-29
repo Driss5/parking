@@ -22,6 +22,7 @@ Route::post('/create-user', [ParkingController::class, 'createUser'])->middlewar
 // Partie User
 Route::post('/reserver-parking', [ReservationController::class, 'reserverParking'])->middleware('auth:sanctum');
 Route::get('/parkings', [ParkingController::class, 'parkings'])->middleware('auth:sanctum');
+Route::get('/parkings/{id}', [ReservationController::class, 'parkingShow'])->middleware('auth:sanctum');
 
 // Partie Agent
 Route::get('/agent-reservations', [ReservationController::class, 'agentReservations'])->middleware('auth:sanctum');

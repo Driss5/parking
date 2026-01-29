@@ -37,6 +37,16 @@ class ReservationController extends Controller
         }
     }
 
+    public function parkingShow($id) {
+        $parking = Parking::find($id);
+
+        if ($parking) {
+            return response()->json($parking);
+        } else {
+            return response()->json(['message' => 'Parking not found'], 404);
+        }
+    }
+
     public function agentReservations() {
         $user = auth()->user();
 
