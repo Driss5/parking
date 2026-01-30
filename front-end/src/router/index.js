@@ -5,6 +5,8 @@ import LoginView from '../views/AuthView/LoginView.vue'
 import ParkingsView from '@/views/ParkingsView.vue'
 import ParkingDetailsView from '@/views/ParkingDetailsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import ShowReservationView from '@/views/Agent/ShowReservationView.vue'
+import AgentDashboardView from '@/views/Agent/AgentDashboardView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +48,16 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileView,
+    },
+    {
+      path: '/ShowReservationView',
+      name: 'ShowReservationView',
+      component: ShowReservationView,
+    },
+    {
+      path: '/AgentDashboard',
+      name: 'AgentDashboard',
+      component: AgentDashboardView,
     },
   ],
 })

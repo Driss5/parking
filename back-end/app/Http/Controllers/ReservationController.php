@@ -98,7 +98,7 @@ class ReservationController extends Controller
 
         $completedReservations = Reservation::whereHas('parking', function($query) use ($user) {
             $query->where('agent_id', $user->id);
-        })->where('status', 'confirmed')->count();
+        })->where('status', 'completed')->count();
 
         return response()->json([
             'total_reservations' => $totalReservations,
