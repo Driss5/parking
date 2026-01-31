@@ -7,6 +7,9 @@ import ParkingDetailsView from '@/views/ParkingDetailsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import ShowReservationView from '@/views/Agent/ShowReservationView.vue'
 import AgentDashboardView from '@/views/Agent/AgentDashboardView.vue'
+import ParkingsAdminView from '@/views/Admin/ParkingsAdminView.vue'
+import AddOrUpdateParkingView from '@/views/Admin/AddOrUpdateParkingView.vue'
+import AddUserAgentView from '@/views/Admin/AddUserAgentView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +61,21 @@ const router = createRouter({
       path: '/AgentDashboard',
       name: 'AgentDashboard',
       component: AgentDashboardView,
+    },
+    {
+      path: '/ParkingsAdmin',
+      name: 'ParkingsAdmin',
+      component: ParkingsAdminView,
+    },
+    {
+      path: '/AddOrUpdateParking/:id?',
+      name: 'AddOrUpdateParking',
+      component: AddOrUpdateParkingView,
+    },
+    {
+      path: '/AddUserAgent',
+      name: 'AddUserAgent',
+      component: AddUserAgentView,
     },
   ],
 })
