@@ -36,15 +36,16 @@ console.log(token)
 </script>
 
 <template>
+    
     <h1>Login Page</h1>
     <div>
         <form @submit.prevent="handleLogin">
             <div>
-                <label>email</label>
+                <label>Email</label>
                 <input type="email" v-model="myForm.email" required />
             </div>
             <div>
-                <label>password</label>
+                <label>Password</label>
                 <input type="password" v-model="myForm.password" required />
             </div>
             <button type="submit">Login</button>
@@ -58,7 +59,64 @@ console.log(token)
 </template>
 
 <style scoped>
-    h1 {
-        color: red;
-    }
-</style>
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e3a5f;
+}
+
+div {
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  background: #f5f7fa;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+form > div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1e88e5;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
+}
+
+button {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #1e88e5;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #156
+} </style>
