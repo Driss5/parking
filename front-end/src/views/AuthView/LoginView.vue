@@ -1,12 +1,13 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router'
 
 const myForm = ref({
     email: '',
     password: '',
 })
-
+const router = useRouter()
 const errorMessage = ref('');
 const isLogined = ref(false);
 
@@ -22,6 +23,7 @@ const handleLogin = async () => {
     if (response.status === 200) {
         localStorage.setItem('token', response.data.access_token)
         isLogined.value = true;
+        router.push('/parkings')
         console.log('Login successful:', response.data);
     }
   } catch (error) {

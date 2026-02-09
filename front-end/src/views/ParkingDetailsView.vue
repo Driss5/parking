@@ -2,11 +2,12 @@
 import axios from 'axios'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const route = useRoute()
 const id = route.params.id
 const showForm = ref(false) // Toggle state for the form
-
+const router = useRouter()
 const myForm = ref({
     name: '',
     cin: '',
@@ -72,6 +73,7 @@ const handleReserve = async () => {
 
     if (response.status === 201) {
         alert('Réservation réussie !')
+        router.push('/profile')
         showForm.value = false // Hide form after success
         // Reset form or redirect if needed
     }

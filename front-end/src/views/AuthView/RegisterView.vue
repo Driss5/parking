@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router'
 
 const myForm = ref({
     name: '',
@@ -12,6 +13,7 @@ const myForm = ref({
     number_phone: ''
 })
 
+const router = useRouter()
 const errorMessage = ref('');
 const isRegistered = ref(false);
 
@@ -33,6 +35,7 @@ const handleRegistration = async () => {
     if (response.status === 201) {
         localStorage.setItem('token', response.data.access_token)
         isRegistered.value = true;
+        router.push('/parkings')
         console.log('Registration successful:', response.data);
     }
   } catch (error) {
