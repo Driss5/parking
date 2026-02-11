@@ -4,6 +4,37 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 
+const token = localStorage.getItem('token')
+const user = ref(null)
+
+const fetchUser = async () => {
+    try {
+        const response = await axios.get(
+        'http://127.0.0.1:8000/api/user',
+        {
+            headers: {
+            Authorization: `Bearer ${token}`
+            }
+        }
+        )
+
+        user.value = response.data.user
+
+        console.log(user.value)
+        
+        myForm.value.name = user.value.name
+        myForm.value.cin = user.value.cin
+        myForm.value.number_phone = user.value.number_phone
+
+    } catch (error) {
+        console.log('Error fetching User', error.response?.data || error)
+    }
+}
+
+onMounted(() => {
+  fetchUser()
+})
+
 const route = useRoute()
 const id = route.params.id
 const showForm = ref(false) // Toggle state for the form
@@ -180,7 +211,7 @@ const toggleForm = () => {
                     <div class="input-group full">
                         <label>Nom complet</label>
                         <div class="input-wrapper">
-                            <input type="text" v-model="myForm.name" placeholder="Ex: Jean Dupont" required />
+                            <input type="text" v-model="myForm.name" readonly placeholder="Ex: Jean Dupont" required />
                             <span class="input-icon">👤</span>
                         </div>
                     </div>
@@ -189,14 +220,14 @@ const toggleForm = () => {
                         <div class="input-group">
                             <label>CIN</label>
                             <div class="input-wrapper">
-                                <input type="text" v-model="myForm.cin" placeholder="Ex: AB123456" required />
+                                <input type="text" v-model="myForm.cin" readonly placeholder="Ex: AB123456" required />
                                 <span class="input-icon">🪪</span>
                             </div>
                         </div>
                         <div class="input-group">
                             <label>Téléphone</label>
                             <div class="input-wrapper">
-                                <input type="text" v-model="myForm.number_phone" placeholder="Ex: 06 12 34 56 78" required />
+                                <input type="text" v-model="myForm.number_phone" readonly placeholder="Ex: 06 12 34 56 78" required />
                                 <span class="input-icon">📱</span>
                             </div>
                         </div>

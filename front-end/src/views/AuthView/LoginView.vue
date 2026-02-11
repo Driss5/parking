@@ -28,7 +28,7 @@ const handleLogin = async () => {
     if (response.status === 200) {
         localStorage.setItem('token', response.data.access_token)
         isLogined.value = true;
-        router.push('/parkings')
+        router.push('/')
         console.log('Login successful:', response.data);
     }
   } catch (error) {
@@ -72,7 +72,7 @@ const handleLogin = async () => {
         </div>
 
         <button type="submit" :disabled="isLoading" class="login-btn">
-          <span v-if="!isLoading">Sign In</span>
+          <span v-if="!isLoading">Log In</span>
           <div v-else class="spinner"></div>
         </button>
       </form>

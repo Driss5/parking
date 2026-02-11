@@ -1,16 +1,22 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted , computed } from 'vue'
 import axios from 'axios'
 import router from '@/router'
 
 // 1. Data State
 const parkings = ref([])
 const searchQuery = ref('')
+const token = localStorage.getItem('token')
+const selectedCapacity = ref(null)
+
+if (!token) {
+  router.push({ name: 'login' })
+}
 
 // 2. Fetch Data mn l-Backend
 const handleShowParking = async () => {
   try {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const response = await axios.get('http://127.0.0.1:8000/api/parkings', {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -28,13 +34,29 @@ const filteredParkings = computed(() => {
   )
 })
 
+let intervalId = null
+
 onMounted(() => {
   handleShowParking()
+
+  intervalId = setInterval(() => {
+    handleShowParking()
+  }, 2000)
 })
+
+onUnmounted(() => {
+  if (intervalId) {
+    clearInterval(intervalId)
+  }
+})
+
 
 function handleShowOneParking(id) {
   router.push({ name: 'ParkingDetails', params: { id } })
 }
+
+// function handleAvailable
+
 </script>
 
 <template>
@@ -63,8 +85,8 @@ function handleShowOneParking(id) {
           </div>
           <div class="filter-group">
             <span class="label">Availability:</span>
-            <button class="chip green">Available</button>
-            <button class="chip outline">Full</button>
+            <button class="chip green" @click="handleAvFilter('available')">Available</button>
+            <button class="chip outline" @click="handleAvFilter('full')">Full</button>
           </div>
         </div>
       </div>
