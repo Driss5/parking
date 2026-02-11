@@ -126,7 +126,7 @@ const handleRegistration = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffffff;
+  background-color: #2e00adff;
   font-family: 'Plus Jakarta Sans', sans-serif;
   padding: 40px 20px;
 }

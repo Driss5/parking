@@ -2,6 +2,13 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router'
+import IntroAnimation from '../Animation/IntroAnimation.vue';
+
+const showIntro = ref(true)
+
+const handleIntroFinished = () => {
+  showIntro.value = false
+}
 
 const myForm = ref({
     email: '',
@@ -41,7 +48,15 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="page-wrapper">
+
+<IntroAnimation 
+  v-if="showIntro" 
+  @finished="handleIntroFinished"
+/>
+
+<!-- <Transition name="page-fade" appear> -->
+  <div v-if="!showIntro" class="page-wrapper">
+    <Transition name="page-fade" appear>
     <div class="auth-card">
       
       <div class="card-header">
@@ -71,6 +86,9 @@ const handleLogin = async () => {
           />
         </div>
 
+        <div class="register-btn">
+            <a href="/register">Register</a>
+        </div>
         <button type="submit" :disabled="isLoading" class="login-btn">
           <span v-if="!isLoading">Log In</span>
           <div v-else class="spinner"></div>
@@ -85,20 +103,45 @@ const handleLogin = async () => {
           <p v-if="isLogined" class="alert success">Login successful! Redirecting...</p>
         </Transition>
       </div>
-      
     </div>
+    </Transition>
   </div>
+<!-- </Transition> -->
+
 </template>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.page-fade-enter-active {
+  transition: opacity 2s ease, transform 2s ease;
+}
+
+.page-fade-enter-from {
+  opacity: 0;
+  /* transform: translateY(20px); */
+}
+
+.page-fade-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.register-btn a {
+  display: inline-block;
+  margin-left: 15px;
+  color: #2e00adff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
 
 .page-wrapper {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffffff; /* خلفية هادئة */
+  background-color: #2e00adff; /* خلفية هادئة */
   font-family: 'Plus Jakarta Sans', sans-serif;
   padding: 20px;
 }
@@ -118,7 +161,6 @@ const handleLogin = async () => {
   margin-bottom: 32px;
 }
 
-/* الـ Logo الـ m-cadre اللي طلبتي */
 .app-logo {
   width: 52px;
   height: 52px;
