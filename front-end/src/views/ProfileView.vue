@@ -113,20 +113,36 @@ onUnmounted(() => {
 
 <style scoped>
 .profile-container {
-  max-width: 1000px;
-  margin: 0 auto;
+  /* max-width: 1000px;
+  margin: 0 auto; */
+  height: 100vh;
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('@/assets/car.jpeg') center/cover no-repeat;
+  filter: blur(8px);
+  transform: scale(1.1); /* مهم باش blur ما يقطعش الجوانب */
+  z-index: -1;
 }
 
 .profile-header h1 {
   font-size: 2rem;
   font-weight: 700;
-  color: #1e293b;
+  color: white;
   margin-bottom: 2rem;
   border-bottom: 3px solid #3b82f6;
   padding-bottom: 0.75rem;
   display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
 
 .user-card {
@@ -181,9 +197,15 @@ onUnmounted(() => {
 }
 
 .reservations-section h3 {
-  color: #1e293b;
+  color: white;
   font-size: 1.25rem;
   margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  width: fit-content;
+  border-bottom: 3px solid #3b82f6;
+  padding-bottom: 0.75rem;
 }
 
 .table-wrapper {
