@@ -272,19 +272,28 @@ const toggleForm = () => {
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* GLOBAL RESET & FONT */
+/* GLOBAL RESET & FONT */
 .page-container {
+  position: relative;
   min-height: 100vh;
-  /* background-color: #f0f4f8; */
-  /* background-image: 
-    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%), 
-    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%); */
   padding: 60px 20px;
   font-family: 'Plus Jakarta Sans', sans-serif;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  overflow: hidden;
 }
 
+/* Background image */
+.page-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("@/assets/car.jpeg") center/cover no-repeat;
+  filter: blur(8px);
+  transform: scale(1.1); /* bach ma ybanch l edges */
+  z-index: -1;
+}
 .content-wrapper {
   max-width: 850px;
   width: 100%;
@@ -295,7 +304,7 @@ const toggleForm = () => {
 
 /* --- MAIN CARD --- */
 .main-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.39);
   border-radius: 30px;
   overflow: hidden;
   box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.15);
@@ -407,7 +416,7 @@ const toggleForm = () => {
 }
 
 .description-box p {
-    color: #64748b;
+    color: #000000;
     line-height: 1.7;
     font-size: 15px;
 }
@@ -509,7 +518,7 @@ const toggleForm = () => {
 }
 
 .form-container {
-    background: white;
+    background: rgba(255, 255, 255, 0.37);
     padding: 40px;
     border-radius: 30px;
     box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.15);
@@ -525,7 +534,7 @@ const toggleForm = () => {
 .form-header-fancy h2 {
     font-size: 24px;
     font-weight: 800;
-    color: #1e293b;
+    color: #000000;
     background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -542,7 +551,7 @@ const toggleForm = () => {
     margin-bottom: 8px;
     font-size: 13px;
     font-weight: 700;
-    color: #334155;
+    color: #000000;
     margin-left: 5px;
 }
 
