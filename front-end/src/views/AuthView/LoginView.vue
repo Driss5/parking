@@ -141,15 +141,28 @@ const handleLogin = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #2e00adff; /* خلفية هادئة */
+  /* background-color: #2e00adff; */
   font-family: 'Plus Jakarta Sans', sans-serif;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
 }
+
+.page-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('@/assets/car.jpeg') center/cover no-repeat;
+  filter: blur(8px);
+  transform: scale(1.1); /* مهم باش blur ما يقطعش الجوانب */
+  z-index: -1;
+}
+
 
 .auth-card {
   width: 100%;
   max-width: 400px;
-  background: #ffffff;
+  background: #f8fafc8c;
   border-radius: 24px;
   padding: 40px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.49), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
