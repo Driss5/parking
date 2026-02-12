@@ -93,7 +93,7 @@ const submitParking = async () => {
       alert('Parking created successfully')
     }
 
-    router.push('/parkings')
+    router.push('/')
 
   } catch (error) {
     console.log('Error saving parking', error.response?.data || error)

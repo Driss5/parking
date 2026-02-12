@@ -38,7 +38,7 @@ const handleRegistration = async () => {
     if (response.status === 201) {
         localStorage.setItem('token', response.data.access_token)
         isRegistered.value = true;
-        router.push('/parkings')
+        router.push('/')
         console.log('Registration successful:', response.data);
     }
   } catch (error) {
