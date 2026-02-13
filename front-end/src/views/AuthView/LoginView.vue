@@ -35,8 +35,16 @@ const handleLogin = async () => {
     if (response.status === 200) {
         localStorage.setItem('token', response.data.access_token)
         isLogined.value = true;
-        router.push('/')
-        console.log('Login successful:', response.data);
+        if (response.data.user.role == 'user') {
+            router.push('/')
+        } else if(response.data.user.role == 'agent') {
+            router.push('/AgentDashboard')
+        } else {
+          router.push('/ParkingsAdmin')
+        }
+        // router.push('/')
+        console.log(response.data.user.role)
+        // console.log('Login successful:', response.data);
     }
   } catch (error) {
     errorMessage.value = 'Email or password incorrect.';
