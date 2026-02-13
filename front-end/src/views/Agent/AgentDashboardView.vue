@@ -7,6 +7,9 @@ const token = localStorage.getItem('token')
 let dashboardData = ref({})
 let intervalId = null
 
+const userId = ref(null)
+const parkingTarif = ref(null)
+
 const fetchRole = async () => {
   if (!token) {
     console.log('No token found')
@@ -24,16 +27,49 @@ const fetchRole = async () => {
     )
 
     role.value = response.data.user.role
-    console.log('ROLE:', role.value)
+    userId.value = response.data.user.id
+    // console.log('ROLE:', role.value)
+    // console.log('User:', userId.value)
+
+    // if (role.value == 'agent') {
+    //     await fetchParking()
+    //     await fetchAgentDashboard()
+    // }
 
     if (role.value == 'agent') {
-        await fetchReservations()
+        // await fetchReservations()
+        await fetchParking()
+        await fetchAgentDashboard()
+        startDashboardRefresh()
     } else {
         console.log('You are not an agent')
     }
 
   } catch (error) {
     console.log('Error fetching role', error.response?.data || error)
+  }
+}
+
+const fetchParking = async () => {
+  try {
+    const response = await axios.get(
+      'http://127.0.0.1:8000/api/parkings',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
+    const parkingFind = response.data.find((data)=> {
+        return data.agent_id == userId.value
+    })
+    // dashboardData.value = response.data
+    console.log('user : ', userId.value)
+    console.log(parkingFind)
+    parkingTarif.value = parkingFind.tariffs
+    console.log('parking tarif', parkingTarif.value)
+  } catch (error) {
+    console.log('Error fetching agent dashboard data', error.response?.data || error)
   }
 }
 
@@ -63,8 +99,10 @@ const startDashboardRefresh = () => {
 }
 
 onMounted(() => {
-  fetchAgentDashboard()
-  startDashboardRefresh()
+//     fetchParking()
+//   fetchAgentDashboard()
+//   startDashboardRefresh()
+fetchRole()
 })
 
 onUnmounted(() => {
@@ -109,7 +147,7 @@ function handleReturnToReservation() {
                         <td>{{ dashboardData.pending_reservations }}</td>
                         <td>{{ dashboardData.completed_reservations }}</td>
                         <td>{{ dashboardData.available_spots }}</td>
-                        <td>${{ dashboardData.completed_reservations * 5 }}</td>
+                        <td>${{ dashboardData.completed_reservations * parkingTarif }}</td>
                     </tr>
                 </tbody>
             </table>
